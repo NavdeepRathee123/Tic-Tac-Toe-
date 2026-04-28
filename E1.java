@@ -9,10 +9,19 @@ public class E1
         printBoard(board);
         tossToDecide();
         int userSlot = acceptUserSlot();
-        int[] position = convertSlotToIndex(userSlot);
-        int row = position[0];
-        int col = position[1];
-        System.out.println("Row: " + row + ", Column: " + col);
+        int[] pos = convertSlotToIndex(userSlot);
+        int row = pos[0];
+        int col = pos[1];
+        if (isValidMove(board, row, col))
+        {
+            board[row][col] = 'X';
+            System.out.println("Move accepted!");
+        }
+        else
+        {
+            System.out.println("Invalid move! Cell already occupied.");
+        }
+        printBoard(board);
     }
     public static void initializeBoard(char[][] board)
     {
@@ -26,7 +35,7 @@ public class E1
     }
     public static void printBoard(char[][] board)
     {
-        System.out.println("Tic-Tac-Toe Board:");
+        System.out.println("\nTic-Tac-Toe Board:");
 
         for (int i = 0; i < 3; i++)
         {
@@ -68,21 +77,23 @@ public class E1
         while (true)
         {
             System.out.print("Enter a slot number (1-9): ");
+
             if (sc.hasNextInt())
             {
                 slot = sc.nextInt();
+
                 if (slot >= 1 && slot <= 9)
                 {
                     return slot;
                 }
                 else
                 {
-                    System.out.println("Invalid! Enter number between 1 and 9.");
+                    System.out.println("Invalid! Enter 1–9.");
                 }
             }
             else
             {
-                System.out.println("Invalid input! Enter a number.");
+                System.out.println("Invalid input!");
                 sc.next();
             }
         }
@@ -91,6 +102,19 @@ public class E1
     {
         int row = (slot - 1) / 3;
         int col = (slot - 1) % 3;
+
         return new int[]{row, col};
+    }
+    public static boolean isValidMove(char[][] board, int row, int col)
+    {
+        if (row < 0 || row > 2 || col < 0 || col > 2)
+        {
+            return false;
+        }
+        if (board[row][col] == '-')
+        {
+            return true;
+        }
+        return false;
     }
 }
