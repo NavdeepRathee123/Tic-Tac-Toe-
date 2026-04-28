@@ -1,72 +1,87 @@
+import java.util.Random;
 import java.util.Scanner;
-class TicTacToe {
-    private char[] board;
-    private Scanner scanner;
-    public TicTacToe() 
+public class E1
+{
+    public static void main(String[] args)
     {
-        board = new char[9];
-        scanner = new Scanner(System.in);
-        for (int i = 0; i < 9; i++) 
+        char[][] board = new char[3][3];
+        initializeBoard(board);
+        printBoard(board);
+        tossToDecide();
+        int userSlot = acceptUserSlot();
+        System.out.println("You selected slot: " + userSlot);
+    }
+    public static void initializeBoard(char[][] board)
+    {
+        for (int i = 0; i < 3; i++)
         {
-            board[i] = ' ';
+            for (int j = 0; j < 3; j++)
+            {
+                board[i][j] = '-';
+            }
         }
     }
-    public void displayBoard() 
+    public static void printBoard(char[][] board)
     {
-        System.out.println();
-        System.out.println(board[0] + " | " + board[1] + " | " + board[2]);
-        System.out.println("--+---+--");
-        System.out.println(board[3] + " | " + board[4] + " | " + board[5]);
-        System.out.println("--+---+--");
-        System.out.println(board[6] + " | " + board[7] + " | " + board[8]);
-        System.out.println();
+        System.out.println("Tic-Tac-Toe Board:");
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
-    public int getUserSlot() 
+    public static void tossToDecide()
     {
+        Random random = new Random();
+        int toss = random.nextInt(2);
+        char userSymbol;
+        char computerSymbol;
+        String currentPlayer;
+        if (toss == 0)
+        {
+            userSymbol = 'X';
+            computerSymbol = 'O';
+            currentPlayer = "User";
+        }
+        else
+        {
+            userSymbol = 'O';
+            computerSymbol = 'X';
+            currentPlayer = "Computer";
+        }
+        System.out.println("\nToss Result:");
+        System.out.println("User Symbol: " + userSymbol);
+        System.out.println("Computer Symbol: " + computerSymbol);
+        System.out.println("First Turn: " + currentPlayer);
+    }
+    public static int acceptUserSlot()
+    {
+        Scanner sc = new Scanner(System.in);
         int slot;
-        while (true) 
+        while (true)
         {
             System.out.print("Enter a slot number (1-9): ");
-            if (scanner.hasNextInt()) 
+            if (sc.hasNextInt())
             {
-                slot = scanner.nextInt();
-                if (slot >= 1 && slot <= 9) 
+                slot = sc.nextInt();
+                if (slot >= 1 && slot <= 9)
                 {
-                    return slot - 1;
-                } else 
-                {
-                    System.out.println("❌ Enter number between 1 and 9.");
+                    return slot;
                 }
-            } else 
+                else
+                {
+                    System.out.println("Invalid! Enter number between 1 and 9.");
+                }
+            }
+            else
             {
-                System.out.println("❌ Invalid input! Enter integer.");
-                scanner.next();
+                System.out.println("Invalid input! Enter a number.");
+                sc.next(); // clear wrong input
             }
         }
-    }
-    public void makeMove(char player) {
-        int index;
-        while (true) 
-        {
-            index = getUserSlot();
-            if (board[index] == ' ') 
-            {
-                board[index] = player;
-                break;
-            } else 
-            {
-                System.out.println("❌ Slot already occupied! Try again.");
-            }
-        }
-    }
-}
-public class Main 
-{
-    public static void main(String[] args) 
-    {
-        TicTacToe game = new TicTacToe();
-        game.displayBoard();
-        game.makeMove('X');
-        game.displayBoard();
     }
 }
