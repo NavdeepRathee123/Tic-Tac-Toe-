@@ -8,19 +8,26 @@ public class E1
         initializeBoard(board);
         printBoard(board);
         tossToDecide();
-        int userSlot = acceptUserSlot();
-        int[] pos = convertSlotToIndex(userSlot);
-        int row = pos[0];
-        int col = pos[1];
-        if (isValidMove(board, row, col))
+        int row, col;
+        while (true)
         {
-            board[row][col] = 'X';
-            System.out.println("Move accepted!");
+            int userSlot = acceptUserSlot();
+            int[] pos = convertSlotToIndex(userSlot);
+
+            row = pos[0];
+            col = pos[1];
+
+            if (isValidMove(board, row, col))
+            {
+                placeMove(board, row, col, 'X');
+                break;
+            }
+            else
+            {
+                System.out.println("Invalid move! Try again.");
+            }
         }
-        else
-        {
-            System.out.println("Invalid move! Cell already occupied.");
-        }
+
         printBoard(board);
     }
     public static void initializeBoard(char[][] board)
@@ -116,5 +123,9 @@ public class E1
             return true;
         }
         return false;
+    }
+    public static void placeMove(char[][] board, int row, int col, char symbol)
+    {
+        board[row][col] = symbol;
     }
 }
