@@ -9,7 +9,10 @@ public class E1
         printBoard(board);
         tossToDecide();
         int userSlot = acceptUserSlot();
-        System.out.println("You selected slot: " + userSlot);
+        int[] position = convertSlotToIndex(userSlot);
+        int row = position[0];
+        int col = position[1];
+        System.out.println("Row: " + row + ", Column: " + col);
     }
     public static void initializeBoard(char[][] board)
     {
@@ -80,8 +83,14 @@ public class E1
             else
             {
                 System.out.println("Invalid input! Enter a number.");
-                sc.next(); // clear wrong input
+                sc.next();
             }
         }
+    }
+    public static int[] convertSlotToIndex(int slot)
+    {
+        int row = (slot - 1) / 3;
+        int col = (slot - 1) % 3;
+        return new int[]{row, col};
     }
 }
