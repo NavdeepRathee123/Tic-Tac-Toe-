@@ -13,10 +13,8 @@ public class E1
         {
             int userSlot = acceptUserSlot();
             int[] pos = convertSlotToIndex(userSlot);
-
             row = pos[0];
             col = pos[1];
-
             if (isValidMove(board, row, col))
             {
                 placeMove(board, row, col, 'X');
@@ -27,7 +25,8 @@ public class E1
                 System.out.println("Invalid move! Try again.");
             }
         }
-
+        printBoard(board);
+        computerMove(board);
         printBoard(board);
     }
     public static void initializeBoard(char[][] board)
@@ -84,11 +83,9 @@ public class E1
         while (true)
         {
             System.out.print("Enter a slot number (1-9): ");
-
             if (sc.hasNextInt())
             {
                 slot = sc.nextInt();
-
                 if (slot >= 1 && slot <= 9)
                 {
                     return slot;
@@ -109,7 +106,6 @@ public class E1
     {
         int row = (slot - 1) / 3;
         int col = (slot - 1) % 3;
-
         return new int[]{row, col};
     }
     public static boolean isValidMove(char[][] board, int row, int col)
@@ -127,5 +123,23 @@ public class E1
     public static void placeMove(char[][] board, int row, int col, char symbol)
     {
         board[row][col] = symbol;
+    }
+    public static void computerMove(char[][] board)
+    {
+        Random random = new Random();
+        int row, col;
+        while (true)
+        {
+            int slot = random.nextInt(9) + 1;
+            int[] pos = convertSlotToIndex(slot);
+            row = pos[0];
+            col = pos[1];
+            if (isValidMove(board, row, col))
+            {
+                placeMove(board, row, col, 'O');
+                System.out.println("Computer chose slot: " + slot);
+                break;
+            }
+        }
     }
 }
