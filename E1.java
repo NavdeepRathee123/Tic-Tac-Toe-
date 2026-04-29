@@ -186,6 +186,7 @@ public class E1
 
         return false;
     }
+
     public static boolean isBoardFull(char[][] board)
     {
         for (int i = 0; i < 3; i++)
