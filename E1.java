@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.Scanner;
+
 public class E1
 {
     public static void main(String[] args)
@@ -92,10 +93,12 @@ public class E1
             System.out.println();
         }
     }
+
     public static int acceptUserSlot()
     {
         Scanner sc = new Scanner(System.in);
         int slot;
+
         while (true)
         {
             System.out.print("Enter a slot number (1-9): ");
@@ -120,12 +123,14 @@ public class E1
             }
         }
     }
+
     public static int[] convertSlotToIndex(int slot)
     {
         int row = (slot - 1) / 3;
         int col = (slot - 1) % 3;
         return new int[]{row, col};
     }
+
     public static boolean isValidMove(char[][] board, int row, int col)
     {
         if (row < 0 || row > 2 || col < 0 || col > 2)
@@ -135,19 +140,24 @@ public class E1
 
         return board[row][col] == '-';
     }
+
     public static void placeMove(char[][] board, int row, int col, char symbol)
     {
         board[row][col] = symbol;
     }
+
     public static void computerMove(char[][] board, char symbol)
     {
         Random random = new Random();
+
         while (true)
         {
             int slot = random.nextInt(9) + 1;
             int[] pos = convertSlotToIndex(slot);
+
             int row = pos[0];
             int col = pos[1];
+
             if (isValidMove(board, row, col))
             {
                 placeMove(board, row, col, symbol);
@@ -156,15 +166,18 @@ public class E1
             }
         }
     }
+
     public static boolean checkWin(char[][] board, char symbol)
     {
         for (int i = 0; i < 3; i++)
         {
             if (board[i][0] == symbol && board[i][1] == symbol && board[i][2] == symbol)
                 return true;
+
             if (board[0][i] == symbol && board[1][i] == symbol && board[2][i] == symbol)
                 return true;
         }
+
         if (board[0][0] == symbol && board[1][1] == symbol && board[2][2] == symbol)
             return true;
 
